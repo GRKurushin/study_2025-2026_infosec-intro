@@ -1,0 +1,431 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  english,
+  russian,
+  12pt,
+  a4paper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{setspace}
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\ifLuaTeX
+\usepackage[bidi=basic,provide=*]{babel}
+\else
+\usepackage[bidi=default,provide=*]{babel}
+\fi
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+\usepackage[style=gost-numeric,backend=biber,langhook=extras,autolang=other*]{biblatex}
+\addbibresource{bib/cite.bib}
+
+\usepackage[]{csquotes}
+
+\usepackage{indentfirst}
+\usepackage{float}
+\floatplacement{figure}{H}
+\IfFileExists{plex-otf.sty}{
+  %% Full TeXlive
+  \usepackage[
+    % math,
+    RM={Scale=0.94},SS={Scale=0.94},SScon={Scale=0.94},TT={Scale=MatchLowercase,FakeStretch=0.9},
+    DefaultFeatures={Ligatures=Common}
+  ]{plex-otf}
+  % \usepackage[Scale=MatchUppercase]{juliamono}
+}{
+  %% TinyTeX
+  \usepackage{libertine}
+}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Содержание}
+\else
+  \newcommand\contentsname{Содержание}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Список иллюстраций}
+\else
+  \newcommand\listfigurename{Список иллюстраций}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Список таблиц}
+\else
+  \newcommand\listtablename{Список таблиц}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Рисунок}
+\else
+  \newcommand\figurename{Рисунок}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Таблица}
+\else
+  \newcommand\tablename{Таблица}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Список}
+\newcommand*\listoflistings{\listof{codelisting}{Листинги}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Индивидуальный проект},
+  pdfauthor={Курушин Георгий Романович},
+  pdflang={ru-RU},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Индивидуальный проект}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{2 Этап}
+\author{Курушин Георгий Романович}
+\date{}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Содержание}
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\listoffigures
+\listoftables
+
+\setstretch{1.5}
+\chapter{Цель
+работы}\label{ux446ux435ux43bux44c-ux440ux430ux431ux43eux442ux44b}
+
+Приобретение практических навыков по установке DVWA
+
+\chapter{Задание}\label{ux437ux430ux434ux430ux43dux438ux435}
+
+Установить дистрибутив DVWA в Kali Linux
+
+\chapter{Теоретическое
+введение}\label{ux442ux435ux43eux440ux435ux442ux438ux447ux435ux441ux43aux43eux435-ux432ux432ux435ux434ux435ux43dux438ux435}
+
+DVWA - это уязвимое веб-приложение, разработанное на PHP и MYSQL.
+
+Некоторые из уязвимостей веб приложений, который содержит DVWA: -
+Брутфорс: Брутфорс HTTP формы страницы входа - используется для
+тестирования инструментов по атаке на пароль методом грубой силы и
+показывает небезопасность слабых паролей. - Исполнение (внедрение)
+команд: Выполнение команд уровня операционной системы. - Межсайтовая
+подделка запроса (CSRF): Позволяет «атакующему» изменить пароль
+администратора приложений. - Внедрение (инклуд) файлов: Позволяет
+«атакующему» присоединить удалённые/локальные файлы в веб приложение. -
+SQL внедрение: Позволяет «атакующему» внедрить SQL выражения в HTTP из
+поля ввода, DVWA включает слепое и основанное на ошибке SQL внедрение. -
+Небезопасная выгрузка файлов: Позволяет «атакующему» выгрузить
+вредоносные файлы на веб сервер. - Межсайтовый скриптинг (XSS):
+«Атакующий» может внедрить свои скрипты в веб приложение/базу данных.
+DVWA включает отражённую и хранимую XSS. - Пасхальные яйца: раскрытие
+полных путей, обход аутентификации и некоторые другие.
+
+DVWA имеет четыре уровня безопасности, они меняют уровень безопасности
+каждого веб приложения в DVWA: - Невозможный --- этот уровень должен
+быть безопасным от всех уязвимостей. Он используется для сравнения
+уязвимого исходного кода с безопасным исходным кодом. - Высокий --- это
+расширение среднего уровня сложности, со смесью более сложных или
+альтернативных плохих практик в попытке обезопасить код. Уязвимости не
+позволяют такой простор эксплуатации как на других уровнях. - Средний
+--- этот уровень безопасности предназначен главным образом для того,
+чтобы дать пользователю пример плохих практик безопасности, где
+разработчик попытался сделать приложение безопасным, но потерпел
+неудачу. - Низкий --- этот уровень безопасности совершенно уязвим и
+совсем не имеет защиты. Его предназначение быть примером среди уязвимых
+веб приложений, примером плохих практик программирования и служить
+платформой обучения базовым техникам эксплуатации.
+\autocite[\textcite{parasram}]{guide}
+
+\chapter{Выполнение лабораторной
+работы}\label{ux432ux44bux43fux43eux43bux43dux435ux43dux438ux435-ux43bux430ux431ux43eux440ux430ux442ux43eux440ux43dux43eux439-ux440ux430ux431ux43eux442ux44b}
+
+Перехожу в директорию \texttt{/var/www/html}. Затем клонирую нужный
+репозиторий GitHub (\textbf{?@fig-001}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/1.png}
+
+}
+
+\caption{Клонирование репозитория}
+
+\end{figure}%
+
+Чтобы настроить DVWA, нужно перейти в каталог \texttt{/dvwa/config},
+затем проверяю содержимое каталога (\textbf{?@fig-002}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/2.png}
+
+}
+
+\caption{Перемещение по директориям}
+
+\end{figure}%
+
+Изменяю файл, используемый для настройки DVWA
+\texttt{config.inc.php.dist} на \texttt{config.inc.php}.
+
+Далее открываю файл в текстовом редакторе nano (\textbf{?@fig-003}).
+Изменяю данные об имени пользователя и пароле.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/3.png}
+
+}
+
+\caption{Редактирование файла в nano}
+
+\end{figure}%
+
+По умолчанию в Kali Linux установлен mysql, поэтому можно его запустить
+без предварительного скачивания, далее выполняю проверку, запущен ли
+процесс (\textbf{?@fig-004}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/4.png}
+
+}
+
+\caption{Запуск mysql}
+
+\end{figure}%
+
+Авторизируюсь в базе данных от имени пользователя root
+(\textbf{?@fig-005}). Появляется командная строка с приглашением
+\enquote{MariaDB}. Далее создаем в ней нового пользователя, используя
+учетные данные из файла config.inc.php. Теперь нужно пользователю
+предоставить привилегии для работы с этой базой данных.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/5.png}
+
+}
+
+\caption{Авторизация в базе данных и предоставление привилегий}
+
+\end{figure}%
+
+Необходимо настроить сервер apache2, перехожу в соответствующую
+директорию (\textbf{?@fig-006}). В файле \texttt{php.ini} нужно будет
+изменить один параметр, поэтому открываю файл в текстовом редакторе.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/6.png}
+
+}
+
+\caption{Перемещение между директориями}
+
+\end{figure}%
+
+В файле параметры allow\_url\_fopen и allow\_url\_include должны быть
+поставлены как \texttt{On} (\textbf{?@fig-007}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/7.png}
+
+}
+
+\caption{Редактирование файла}
+
+\end{figure}%
+
+Запускаем службу веб-сервера apache и проверяем, запущена ли служба
+(\textbf{?@fig-008}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/8.png}
+
+}
+
+\caption{Запуск службы}
+
+\end{figure}%
+
+Мы настроили DVWA, Apache и базу данных, поэтому открываем браузер и
+запускаем веб-приложение, введя 127.0.0/DVWA (\textbf{?@fig-009}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/9.png}
+
+}
+
+\caption{Запуск веб-приложения}
+
+\end{figure}%
+
+Прокручиваем страницу вниз и нажимем на кнопку
+\texttt{create\textbackslash{}reset\ database} (\textbf{?@fig-010}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/10.png}
+
+}
+
+\caption{\enquote{Создание базы данных}}
+
+\end{figure}%
+
+Авторизуюсь с помощью предложенных по умолчанию данных
+(\textbf{?@fig-011}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/11.png}
+
+}
+
+\caption{Авторизация}
+
+\end{figure}%
+
+Оказываюсь на домашней странице веб-приложения, на этом установка
+окончена (\textbf{?@fig-012}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/12.png}
+
+}
+
+\caption{Домашняя страница DVWA}
+
+\end{figure}%
+
+\chapter{Выводы}\label{ux432ux44bux432ux43eux434ux44b}
+
+В ходе работы я приобрел практические навыки по установке уязвимого
+веб-приложения DVWA.
+
+\chapter*{Список
+литературы}\label{ux441ux43fux438ux441ux43eux43a-ux43bux438ux442ux435ux440ux430ux442ux443ux440ux44b}
+\addcontentsline{toc}{chapter}{Список литературы}
+
+\printbibliography[heading=none]
+
+
+
+
+
+\end{document}
