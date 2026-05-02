@@ -1,0 +1,471 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  english,
+  russian,
+  12pt,
+  a4paper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{setspace}
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\ifLuaTeX
+\usepackage[bidi=basic,provide=*]{babel}
+\else
+\usepackage[bidi=default,provide=*]{babel}
+\fi
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+\usepackage[style=gost-numeric,backend=biber,langhook=extras,autolang=other*]{biblatex}
+\addbibresource{bib/cite.bib}
+
+\usepackage[]{csquotes}
+
+\usepackage{indentfirst}
+\usepackage{float}
+\floatplacement{figure}{H}
+\IfFileExists{plex-otf.sty}{
+  %% Full TeXlive
+  \usepackage[
+    % math,
+    RM={Scale=0.94},SS={Scale=0.94},SScon={Scale=0.94},TT={Scale=MatchLowercase,FakeStretch=0.9},
+    DefaultFeatures={Ligatures=Common}
+  ]{plex-otf}
+  % \usepackage[Scale=MatchUppercase]{juliamono}
+}{
+  %% TinyTeX
+  \usepackage{libertine}
+}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Содержание}
+\else
+  \newcommand\contentsname{Содержание}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Список иллюстраций}
+\else
+  \newcommand\listfigurename{Список иллюстраций}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Список таблиц}
+\else
+  \newcommand\listtablename{Список таблиц}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Рисунок}
+\else
+  \newcommand\figurename{Рисунок}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Таблица}
+\else
+  \newcommand\tablename{Таблица}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Список}
+\newcommand*\listoflistings{\listof{codelisting}{Листинги}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Индивидуальный проект},
+  pdfauthor={Курушин Георгий Романович},
+  pdflang={ru-RU},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Индивидуальный проект}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{4 Этап. Использование nikto}
+\author{Курушин Георгий Романович}
+\date{}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Содержание}
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\listoffigures
+\listoftables
+
+\setstretch{1.5}
+\chapter{Цель
+работы}\label{ux446ux435ux43bux44c-ux440ux430ux431ux43eux442ux44b}
+
+Научиться тестированию веб-приложений с помощью сканера nikto
+
+\chapter{Задание}\label{ux437ux430ux434ux430ux43dux438ux435}
+
+Просканировать веб-приложение, используя nikto
+
+\chapter{Теоретическое
+введение}\label{ux442ux435ux43eux440ux435ux442ux438ux447ux435ux441ux43aux43eux435-ux432ux432ux435ux434ux435ux43dux438ux435}
+
+\emph{nikto} --- базовый сканер безопасности веб-сервера. Он сканирует и
+обнаруживает уязвимости в веб-приложениях, обычно вызванные неправильной
+конфигурацией на самом сервере, файлами, установленными по умолчанию, и
+небезопасными файлами, а также устаревшими серверными приложениями.
+Поскольку nikto построен исключительно на LibWhisker2, он сразу после
+установки поддерживает кросс-платформенное развертывание, SSL
+(криптографический протокол, который подразумевает более безопасную
+связь), методы аутентификации хоста (NTLM/Basic), прокси и несколько
+методов уклонения от идентификаторов. Он также поддерживает перечисление
+поддоменов, проверку безопасности приложений (XSS, SQL-инъекции и т. д.)
+и способен с помощью атаки паролей на основе словаря угадывать учетные
+данные авторизации.
+
+Для запуска сканера nikto введите в командную строку терминала команду:
+\texttt{\#\ nikto}
+
+По умолчанию, как ранее было показано в других приложениях, при обычном
+запуске команды отображаются различные доступные параметры. Для
+сканирования цели введите
+\texttt{nikto\ -h\ \textless{}цель\textgreater{}\ -p\ \textless{}порт\textgreater{}},
+где --- домен или IP-адрес целевого сайта, а --- порт, на котором
+запущен сервис
+
+Сканер nikto позволяет идентифицировать уязвимости веб-приложений, такие
+как раскрытие информации, инъекция (XSS/Script/HTML), удаленный поиск
+файлов (на уровне сервера), выполнение команд и идентификация
+программного обеспечения. В дополнение к показанному ранее основному
+сканированию nikto позволяет испытателю на проникновение настроить
+сканирование конкретной цели. Рассмотрим параметры, которые следует
+использовать при сканировании. - Указав переключатель командной строки
+-T с отдельными номерами тестов, можно настроить тестирование конкретных
+типов. - Используя при тестировании параметр -t, вы можете установить
+значение тайм-аута для каждого ответа. - Параметр -D V управляет выводом
+на экран. - Параметры -o и -F отвечают за выбор формата отчета
+сканирования.
+
+Существуют и другие параметры, такие как -mutate (угадывать поддомены,
+файлы, каталоги и имена пользователей), -evasion (обходить фильтр
+идентификаторов) и -Single (для одиночного тестового режима), которые
+можно использовать для углубленной оценки цели \autocite{parasram}.
+
+\chapter{Выполнение
+работы}\label{ux432ux44bux43fux43eux43bux43dux435ux43dux438ux435-ux440ux430ux431ux43eux442ux44b}
+
+Запускаю mysql и apache2 (рис.~\ref{fig-001}).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/1.png}
+
+}
+
+\caption{\label{fig-001}Запуск mysql и apache2}
+
+\end{figure}%
+
+Ввожу в адресной строке браузера адрес DVWA и перехожу в режим выбора
+уровня безопасности, сначала поставлю минимальный - Low
+(рис.~\ref{fig-002}).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/2.png}
+
+}
+
+\caption{\label{fig-002}DVWA - выбор уровня безопасности}
+
+\end{figure}%
+
+Запускаю nikto и проверяю веб-приложение, ввелдя сначала адрес хоста и
+порта (рис.~\ref{fig-003}).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/3.png}
+
+}
+
+\caption{\label{fig-003}Сканирование через ввод адреса хоста и порта}
+
+\end{figure}%
+
+Теперь пробую просканировать, введя полный URL-адрес
+(рис.~\ref{fig-004}). Результаты незначительно отличаются.
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/4.png}
+
+}
+
+\caption{\label{fig-004}Сканирование через ввод URL-адреса}
+
+\end{figure}%
+
+Попробую проделать теперь то же самое, изменив уровень безопасности на
+impossible (рис.~\ref{fig-005}).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/5.png}
+
+}
+
+\caption{\label{fig-005}Выбор самого высокого уровня безопасности}
+
+\end{figure}%
+
+Повторив предыдущую команду, я не заметил изменений в выводе информации
+(рис.~\ref{fig-006}).
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/6.png}
+
+}
+
+\caption{\label{fig-006}Сканирование после изменения уровня
+безопасности}
+
+\end{figure}%
+
+\section{Анализ результатов
+сканирования}\label{ux430ux43dux430ux43bux438ux437-ux440ux435ux437ux443ux43bux44cux442ux430ux442ux43eux432-ux441ux43aux430ux43dux438ux440ux43eux432ux430ux43dux438ux44f}
+
+Кроме адреса хоста и порта веб-приложения, nikto выводит инофрмацию о
+различных уязвимостях приложения:
+
+Сервер: Apache/2.4.58 (Debian) + /DVWA/: Заголовок X-Frame-Options,
+защищающий от перехвата кликов, отсутствует. Смотрите:
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+
+\begin{itemize}
+\item
+  /DVWA/: Заголовок X-Content-Type-Options не задан. Это может позволить
+  пользовательскому агенту отображать содержимое сайта способом,
+  отличным от MIME-типа. Смотрите:
+  https://www.netsparker.com/web-vulnerability-scanner/vulnerabilities/missing-content-type-header/
+\item
+  Корневая страница /DVWA перенаправляет на: login.php
+\item
+  Каталоги CGI не найдены (используйте \enquote*{-C all}, чтобы
+  принудительно проверить все возможные каталоги)
+\item
+  ОПЦИИ: Разрешенные HTTP-методы: GET, POST, OPTIONS, HEAD .
+\item
+  /DVWA///etc/hosts: Установка сервера позволяет считывать любой
+  системный файл, добавляя дополнительный \enquote{/} к URL-адресу.
+\item
+  /DVWA/config/: Найдена индексация каталога.
+\item
+  /DVWA/config/: Информация о конфигурации может быть доступна удаленно.
+\item
+  /DVWA/tests/: Найдена индексация каталога.
+\item
+  /DVWA/tests/: Это может быть интересно.
+\item
+  /DVWA/database/: Найдена индексация каталога.
+\item
+  /DVWA/база данных/: Найден каталог базы данных.
+\item
+  /DVWA/документы/: Найдена индексация каталога.
+\item
+  /DVWA/login.php: Найдена страница входа администратора/раздел.
+\item
+  /DVWA/.git/index: Индексный файл Git может содержать информацию о
+  списке каталогов.
+\item
+  /DVWA/.git/HEAD: Найден файл Git HEAD. Может содержаться полная
+  информация о репозитории.
+\item
+  /DVWA/.git/config: Найден конфигурационный файл Git. Может содержаться
+  информация о деталях репозитория.
+\item
+  /DVWA/.gitignore: найден файл .gitignore. Можно разобраться в
+  структуре каталогов.
+\item
+  /DVWA/wp-content/themes/twentyeleven/images/headers/server.php?filesrc=/etc/hosts:
+  Обнаружен файловый менеджер с бэкдором на PHP.
+\item
+  /DVWA/wordpress/wp-content/themes/twentyeleven/images/headers/server.php?filesrc=/etc/hosts:
+  Обнаружен файловый менеджер с бэкдором на PHP.
+\item
+  /DVWA/wp-includes/Requests/Utility/content-post.php?filesrc=/etc/hosts:
+  Найден файловый менеджер с бэкдором на PHP.
+\item
+  /DVWA/wordpress/wp-includes/Requests/Utility/content-post.php?filesrc=/etc/hosts:
+  Найден файловый менеджер с бэкдором на PHP.
+\item
+  /DVWA/wp-включает в
+  себя/js/tinymce/themes/modern/Meuhy.php?filesrc=/etc/hosts: Найден
+  файловый менеджер бэкдора PHP.
+\item
+  /DVWA/wordpress/wp-включает в
+  себя/js/tinymce/themes/modern/Meuhy.php?filesrc=/etc/hosts: Найден
+  файловый менеджер бэкдора на PHP.
+\item
+  /DVWA/assets/mobirise/css/meta.php?filesrc=: Найден файловый менеджер
+  бэкдора на PHP.
+\item
+  /DVWA/login.cgi?cli=aa\%20aa\%27cat\%20/etc/hosts: Удаленное
+  выполнение какой-либо команды маршрутизатором D-Link.
+\item
+  /DVWA/shell?cat+/etc/hosts: Обнаружен черный ход.
+\item
+  /DVWA/.dockerignore: найден файл .dockerignore. Возможно, удастся
+  разобраться в структуре каталогов и узнать больше о сайте.
+\end{itemize}
+
+Бэкдор, тайный вход (от англ. back door --- «чёрный ход», «лазейка»,
+буквально «задняя дверь») --- дефект алгоритма, который намеренно
+встраивается в него разработчиком и позволяет получить
+несанкционированный доступ к данным или удалённому управлению
+операционной системой и компьютером в целом.
+
+Также в результатах nikto отображает код OSVDB 561 и дает ссылку на
+CVE-2003-1418. OSVDB --- это аббревиатура базы данных уязвимостей с
+открытым исходным кодом.
+
+CVE-2003-1418 --- это уязвимость в Apache HTTP Server 1.3.22--1.3.27 на
+OpenBSD, которая позволяет удалённым злоумышленникам получать
+конфиденциальную информацию через:
+
+\begin{itemize}
+\item
+  Заголовок ETag, который раскрывает номер вode.
+\item
+  Многочастную границу MIME, которая раскрывает идентификаторы дочерних
+  процессов (PID).
+\end{itemize}
+
+В настоящее время эта проблема имеет среднюю степень тяжести.
+
+\chapter{Выводы}\label{ux432ux44bux432ux43eux434ux44b}
+
+В ходе работы я научился использовать сканер nikto для тестирования
+веб-приложений.
+
+
+\printbibliography
+
+
+
+\end{document}
